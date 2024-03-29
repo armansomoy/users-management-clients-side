@@ -15,8 +15,9 @@ function App() {
   const handleAddUser = (e) => {
     e.preventDefault();
 
-    const name = e.target.email.value;
-    const email = e.target.email.value;
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
     const user = { email, name };
     console.log(user);
 
@@ -26,7 +27,14 @@ function App() {
         "content-type": "application/json",
       },
       body: JSON.stringify(user),
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        const newUsers = [...users, data];
+        setUsers(newUsers);
+        form.reset();
+      });
   };
 
   console.log(users);
